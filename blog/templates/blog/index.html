@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+    <div class="image">
+      <div class="image-overlay">
+      </div>
+   </div>
+
+    {% load static %}
+     <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}" />
+
+     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    
+</head>
+<body>
+   
+
+   <h1> <b> ChatBuddy </b> </h1>
+
+
+   <div>
+      <div id="chatbot">
+          <p class="botText"><span> <b> ChatBuddy:</b> Hey I'm your online friend, ChatBuddy! How are you feeling today? 😃✨ <br>Go ahead and write the number of any query. <br> 1A.&emsp;I'm depressed 😐</br>2A.&emsp;I'm sad 😔</br>3A.&emsp;I'm angry 😠</br>4A.&emsp;I'm happy 😃</br> </span></p>
+      </div>
+      <div id="userInput">
+          <input type="text" id="textInput" name="userMessage" placeholder="Type your message..."/>
+          <input type="submit" value="Send" id="buttonInput"/>
+      
+
+      </div>
+  </div>
+
+
+  <script>
+   function getUserResponse(){
+       var userText = $('#textInput').val();
+       var userHTML = "<p class='userText'> <b> User: </b> <span>"+userText+"</span></p>";
+       $('#textInput').val("");
+
+       $('#chatbot').append(userHTML);
+
+
+       
+       $.get('/blog/getResponse',{userMessage:userText}).done(function(data){
+
+         var returnedMessage = "<p class='botText'><b> ChatBuddy: </b><span>"+ data +"</span/></p>";
+         $('#chatbot').append(returnedMessage);
+     })
+
+      
+
+}
+$('#buttonInput').click(function(){
+getUserResponse();
+})
+</script>
+   
+
+</body>
+</html>
